@@ -30,7 +30,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
                     >
                     <ImageView
                         android:layout_width="24dp"
@@ -40,6 +39,8 @@
                         android:clickable="false"
                         android:longClickable="false"
                         android:rotation='@{lang.equals("ar")?180:0}'
+                        android:visibility="invisible"
+
                         />
                     <TextView
                         android:layout_width="0dp"
@@ -52,6 +53,8 @@
                         android:clickable="false"
                         android:longClickable="false"
                         android:layout_weight="1"
+                        android:visibility="invisible"
+
                         />
                     <ImageView
                         android:id="@+id/imagelogout"

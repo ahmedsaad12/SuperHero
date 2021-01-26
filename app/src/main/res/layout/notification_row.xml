@@ -50,9 +50,10 @@
                         android:id="@+id/tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="35dp"
+                        android:layout_margin="20dp"
                         android:text="@{model.ar_title}"
-                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorPrimary"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +61,7 @@
                         android:id="@+id/tv1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="35dp"
+                        android:layout_margin="10dp"
                         android:text="@{model.ar_desc}"
                         android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"

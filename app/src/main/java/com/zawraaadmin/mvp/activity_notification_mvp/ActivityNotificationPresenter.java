@@ -57,7 +57,7 @@ public class ActivityNotificationPresenter {
 
         }
         call = Api.getService(Tags.base_url).
-                getNotification("Bearer " + userModel.getData().getToken(), userModel.getData().getId(), "on", page);
+                getNotification( userModel.getData().getToken(), userModel.getData().getId(), "on", page);
 
         call.enqueue(new Callback<NotificationDataModel>() {
             @Override
@@ -111,7 +111,7 @@ public class ActivityNotificationPresenter {
     public void deltenotification(int notification) {
         view.onLoad();
         Api.getService(Tags.base_url)
-                .delteNotification("Bearer " + userModel.getData().getToken(), notification)
+                .delteNotification( userModel.getData().getToken(), notification)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

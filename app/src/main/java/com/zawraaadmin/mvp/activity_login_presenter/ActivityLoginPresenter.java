@@ -50,6 +50,7 @@ public class ActivityLoginPresenter {
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() &&response.body()!=null&& response.body().getStatus()==200) {
+                                Log.e("cccccccc",response.body().getData().getToken()+"---");
                                 view.onSuccess(response.body());
                             } else if (response.isSuccessful() &&response.body()!=null&&response.body().getStatus()==404) {
                                 view.onUserNoFound();
