@@ -26,6 +26,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.zawraaadmin.R;
+import com.zawraaadmin.models.NotModel;
 import com.zawraaadmin.preferences.Preferences;
 import com.zawraaadmin.tags.Tags;
 import com.zawraaadmin.ui.activity_notifications.NotificationActivity;
@@ -80,12 +81,13 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         String title = null;
         title = map.get("ar_title");
         String content = map.get("ar_desc");
+        Log.e("ldldkdk",current_class);
+        NotModel notModel=new NotModel();
+            if (current_class.equals("com.zawraaadmin.ui.activity_notifications.NotificationActivity")){
+                EventBus.getDefault().post(notModel);
 
-//            if (current_class.equals("com.creative.share.apps.ebranch.activities_fragments.activity_orders.OrdersActivity")||current_class.equals("com.creative.share.apps.ebranch.activities_fragments.activity_order_detials.OrderDetialsActivity")){
-//                EventBus.getDefault().post(orderModel);
-//
-//
-//            }
+
+            }
         sendNotification_VersionNew(content, title, sound_Path);
 
     }
@@ -106,7 +108,11 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         String current_class = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-
+        Log.e("ldldkdk",current_class);
+        NotModel notModel=new NotModel();
+        if (current_class.equals("com.zawraaadmin.ui.activity_notifications.NotificationActivity")) {
+            EventBus.getDefault().post(notModel);
+        }
         sendNotification_VersionOld(content, title, sound_Path);
     }
 

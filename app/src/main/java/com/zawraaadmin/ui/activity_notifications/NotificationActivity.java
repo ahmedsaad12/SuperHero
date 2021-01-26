@@ -22,6 +22,7 @@ import com.zawraaadmin.R;
 import com.zawraaadmin.adapters.NotificationAdapter;
 import com.zawraaadmin.databinding.ActivityNotificationBinding;
 import com.zawraaadmin.language.Language;
+import com.zawraaadmin.models.NotModel;
 import com.zawraaadmin.models.NotificationDataModel;
 import com.zawraaadmin.models.NotificationModel;
 import com.zawraaadmin.mvp.activity_notification_mvp.ActivityNotificationPresenter;
@@ -29,6 +30,10 @@ import com.zawraaadmin.mvp.activity_notification_mvp.ActivityNotificationView;
 import com.zawraaadmin.share.Common;
 import com.zawraaadmin.tags.Tags;
 import com.zawraaadmin.ui.activity_login.LoginActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +68,7 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         notificationModelList = new ArrayList<>();
         Paper.init(this);
         lang = Paper.book().read("lang", "ar");
@@ -84,11 +90,9 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.e("sksks", dy + "");
                 if (dy < 0) {
                     int lastItemPos = manager.findLastCompletelyVisibleItemPosition();
                     int total_items = adapter.getItemCount();
-                    Log.e("kdkdkdk", lastItemPos + " " + total_items);
                     if (!isLoading) {
                         isLoading = true;
                         notificationModelList.add(null);
@@ -189,5 +193,22 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
     public void delete(int position) {
         pos = position;
         presenter.deltenotification(notificationModelList.get(position).getId());
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void listenToNewMessage(NotModel notModel)
+    {
+      notificationModelList.clear();
+      adapter.notifyDataSetChanged();
+      current_page=1;
+      presenter.getNotifications(current_page);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this))
+        {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }
