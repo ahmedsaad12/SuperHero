@@ -46,7 +46,8 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
     private int pos = -1;
     private LinearLayoutManager manager;
     private int current_page = 1;
-    private boolean isLoading=false;
+    private boolean isLoading = false;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -83,11 +84,11 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.e("sksks",dy+"");
+                Log.e("sksks", dy + "");
                 if (dy < 0) {
                     int lastItemPos = manager.findLastCompletelyVisibleItemPosition();
                     int total_items = adapter.getItemCount();
-                    Log.e("kdkdkdk",lastItemPos+" "+total_items);
+                    Log.e("kdkdkdk", lastItemPos + " " + total_items);
                     if (!isLoading) {
                         isLoading = true;
                         notificationModelList.add(0, null);
@@ -108,9 +109,11 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
             binding.tvNoData.setVisibility(View.GONE);
             notificationModelList.addAll(data.getData());
             adapter.notifyDataSetChanged();
-            current_page=data.getCurrent_page();
+            current_page = data.getCurrent_page();
         } else {
-            binding.tvNoData.setVisibility(View.VISIBLE);
+            if (notificationModelList.size() == 0) {
+                binding.tvNoData.setVisibility(View.VISIBLE);
+            }
 
         }
     }
@@ -155,6 +158,7 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
         notificationModelList.remove(pos);
         adapter.notifyItemRemoved(pos);
     }
+
     @Override
     public void onNavigateToLoginActivity() {
 
@@ -167,8 +171,8 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
     @Override
     public void onLogoutSuccess() {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (manager!=null){
-            manager.cancel(Tags.not_tag,Tags.not_id);
+        if (manager != null) {
+            manager.cancel(Tags.not_tag, Tags.not_id);
         }
 
         Intent intent = new Intent(this, LoginActivity.class);
