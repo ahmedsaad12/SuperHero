@@ -91,8 +91,8 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
                     Log.e("kdkdkdk", lastItemPos + " " + total_items);
                     if (!isLoading) {
                         isLoading = true;
-                        notificationModelList.add(0, null);
-                        adapter.notifyItemInserted(0);
+                        notificationModelList.add(null);
+                        adapter.notifyItemInserted(notificationModelList.size() - 1);
                         int next_page = current_page + 1;
                         presenter.getNotifications(next_page);
 
@@ -105,6 +105,12 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
 
     @Override
     public void onSuccess(NotificationDataModel data) {
+        if(notificationModelList.size()>0){
+            if(notificationModelList.get(notificationModelList.size()-1)==null){
+                notificationModelList.remove(notificationModelList.size()-1);
+                adapter.notifyItemRemoved(notificationModelList.size()-1);
+            }
+        }
         if (data.getData().size() > 0) {
             binding.tvNoData.setVisibility(View.GONE);
             notificationModelList.addAll(data.getData());

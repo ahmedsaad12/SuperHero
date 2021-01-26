@@ -50,8 +50,8 @@ public class ActivityNotificationPresenter {
         if (userModel == null) {
             return;
         }
-
-        view.showProgressBar();
+if(page==1){
+        view.showProgressBar();}
         if (call != null) {
             call.cancel();
 
@@ -64,7 +64,9 @@ public class ActivityNotificationPresenter {
             public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
 
                 if (response.isSuccessful()) {
-                    view.hideProgressBar();
+                    if(page==1){
+
+                        view.hideProgressBar();}
                     if (response.body() != null) {
                         view.onSuccess(response.body());
 
@@ -85,7 +87,9 @@ public class ActivityNotificationPresenter {
             @Override
             public void onFailure(Call<NotificationDataModel> call, Throwable t) {
                 try {
-                    view.hideProgressBar();
+                    if(page==1){
+
+                        view.hideProgressBar();}
                     if (t.getMessage() != null) {
                         Log.e("error", t.getMessage() + "__");
 
@@ -120,21 +124,9 @@ public class ActivityNotificationPresenter {
                             //  Log.e("eeeeee", response.body().getUser().getName());
                             // view.onUserFound(response.body());
                             //  Log.e("eeeeee", response.body().getUser().getName());
-                            String re = null;
-                            String status = null;
-                            try {
-                                re = response.body().string();
-                                JSONObject obj = new JSONObject(re);
-                                status = (String) obj.get("status");
-                            } catch (Exception e) {
-                            }
-                            Log.e("data", re);
-                            if (status.equals("200")) {
-                                view.onSuccessDelete();
-                            } else {
-                                view.onFailed(context.getResources().getString(R.string.failed));
 
-                            }
+                                view.onSuccessDelete();
+
                         } else {
                             try {
                                 Log.e("mmmmmmmmmm", response.errorBody().string());
