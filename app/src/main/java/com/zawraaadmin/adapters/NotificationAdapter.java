@@ -72,7 +72,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onClick(View v) {
         if(context instanceof NotificationActivity){
             NotificationActivity notificationActivity=(NotificationActivity)context;
-            notificationActivity.delete(position);
+            notificationActivity.delete(holder.getLayoutPosition());
         }
     }
 });
