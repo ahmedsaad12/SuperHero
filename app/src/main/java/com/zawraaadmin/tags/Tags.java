@@ -9,5 +9,5 @@ public class Tags {
     public static final String session_logout = "logout";
     public static final String not_tag = "zawraapharma_not_tag";
     public static final int not_id = 3254;
-
+//https://documenter.getpostman.com/view/12895224/Tz5tZwRy#cddf3378-dc1b-41a7-80ef-95da3fd9e426
 }
