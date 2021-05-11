@@ -124,11 +124,18 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
         binding.spinnerdelegete.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                delegete_id = singleUserModelList.get(i).getId()+"";
-                notificationModelList.clear();
-                adapter.notifyDataSetChanged();
-                presenter.getNotifications(1,client_id,delegete_id, date);
-
+               if(i!=0) {
+                   delegete_id = singleUserModelList.get(i).getId() + "";
+                   notificationModelList.clear();
+                   adapter.notifyDataSetChanged();
+                   presenter.getNotifications(1, client_id, delegete_id, date);
+               }
+               else {
+                   delegete_id = null;
+                   notificationModelList.clear();
+                   adapter.notifyDataSetChanged();
+                   presenter.getNotifications(1, client_id, delegete_id, date);
+               }
             }
 
             @Override
@@ -139,11 +146,17 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
         binding.spinnerclient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                client_id = pharmacyModelList.get(i).getId()+"";
-                notificationModelList.clear();
-                adapter.notifyDataSetChanged();
-                presenter.getNotifications(1,client_id,delegete_id, date);
-
+     if(i!=0) {
+         client_id = pharmacyModelList.get(i).getId() + "";
+         notificationModelList.clear();
+         adapter.notifyDataSetChanged();
+         presenter.getNotifications(1, client_id, delegete_id, date);
+     }else {
+         client_id =null;
+         notificationModelList.clear();
+         adapter.notifyDataSetChanged();
+         presenter.getNotifications(1, client_id, delegete_id, date);
+     }
             }
 
             @Override
