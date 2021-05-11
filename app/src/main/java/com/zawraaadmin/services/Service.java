@@ -51,6 +51,7 @@ public interface Service {
     @FormUrlEncoded
     @POST("api/admin-update-firebase")
     Call<LogoutModel> updateFirebaseToken(@Header("Authorization") String token,
+                                          @Field("user_id") int user_id,
                                           @Field("phone_token") String phone_token,
                                           @Field("software_type") String software_type
 

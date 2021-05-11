@@ -246,7 +246,7 @@ public class Common {
 
     public static ProgressDialog createProgressDialog(Context context, String msg) {
         ProgressDialog dialog = new ProgressDialog(context);
-        dialog.setMessage(msg);
+      //  dialog.setMessage(msg);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(false);
         ProgressBar bar = new ProgressBar(context);

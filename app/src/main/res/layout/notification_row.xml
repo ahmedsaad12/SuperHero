@@ -14,11 +14,12 @@
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/carddelete"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             app:cardCornerRadius="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -27,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:padding="5dp"
                 android:src="@drawable/ic_close"
-                android:tint="@color/colorPrimary" />
+                app:tint="@color/colorPrimary" />
         </androidx.cardview.widget.CardView>
 
         <FrameLayout
@@ -50,9 +51,14 @@
                         android:id="@+id/tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="35dp"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
                         android:text="@{model.ar_title}"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,19 +66,35 @@
                         android:id="@+id/tv1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="35dp"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
                         android:text="@{model.ar_desc}"
                         android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintTop_toBottomOf="@+id/tv" />
+
+                    <TextView
+                        android:id="@+id/tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="@{model.created_at}"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintTop_toBottomOf="@+id/tv1" />
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_margin="10dp"
                         android:padding="7dp"
-
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

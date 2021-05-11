@@ -50,21 +50,23 @@ public class ActivityNotificationPresenter {
         if (userModel == null) {
             return;
         }
-
-        view.showProgressBar();
+if(page==1){
+        view.showProgressBar();}
         if (call != null) {
             call.cancel();
 
         }
         call = Api.getService(Tags.base_url).
-                getNotification("Bearer " + userModel.getData().getToken(), userModel.getData().getId(), "on", page);
+                getNotification( userModel.getData().getToken(), userModel.getData().getId(), "on", page);
 
         call.enqueue(new Callback<NotificationDataModel>() {
             @Override
             public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
 
                 if (response.isSuccessful()) {
-                    view.hideProgressBar();
+                    if(page==1){
+
+                        view.hideProgressBar();}
                     if (response.body() != null) {
                         view.onSuccess(response.body());
 
@@ -85,7 +87,9 @@ public class ActivityNotificationPresenter {
             @Override
             public void onFailure(Call<NotificationDataModel> call, Throwable t) {
                 try {
-                    view.hideProgressBar();
+                    if(page==1){
+
+                        view.hideProgressBar();}
                     if (t.getMessage() != null) {
                         Log.e("error", t.getMessage() + "__");
 
@@ -111,7 +115,7 @@ public class ActivityNotificationPresenter {
     public void deltenotification(int notification) {
         view.onLoad();
         Api.getService(Tags.base_url)
-                .delteNotification("Bearer " + userModel.getData().getToken(), notification)
+                .delteNotification( userModel.getData().getToken(), notification)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -120,21 +124,9 @@ public class ActivityNotificationPresenter {
                             //  Log.e("eeeeee", response.body().getUser().getName());
                             // view.onUserFound(response.body());
                             //  Log.e("eeeeee", response.body().getUser().getName());
-                            String re = null;
-                            String status = null;
-                            try {
-                                re = response.body().string();
-                                JSONObject obj = new JSONObject(re);
-                                status = (String) obj.get("status");
-                            } catch (Exception e) {
-                            }
-                            Log.e("data", re);
-                            if (status.equals("200")) {
-                                view.onSuccessDelete();
-                            } else {
-                                view.onFailed(context.getResources().getString(R.string.failed));
 
-                            }
+                                view.onSuccessDelete();
+
                         } else {
                             try {
                                 Log.e("mmmmmmmmmm", response.errorBody().string());

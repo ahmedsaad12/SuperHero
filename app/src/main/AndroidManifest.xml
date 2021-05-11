@@ -15,9 +15,17 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
-
-
+        <service
+            android:name=".notification.FireBaseMessaging"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".ui.activity_notifications.NotificationActivity"
