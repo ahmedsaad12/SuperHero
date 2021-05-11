@@ -1,8 +1,10 @@
 package com.zawraaadmin.services;
 
 
+import com.zawraaadmin.models.AllUserModel;
 import com.zawraaadmin.models.LogoutModel;
 import com.zawraaadmin.models.NotificationDataModel;
+import com.zawraaadmin.models.PharmacyDataModel;
 import com.zawraaadmin.models.UserModel;
 
 import java.util.List;
@@ -35,6 +37,10 @@ public interface Service {
     @GET("api/admin-notifications")
     Call<NotificationDataModel> getNotification(@Header("Authorization") String Authorization,
                                                 @Query("user_id") int user_id,
+                                                @Query("client_id") String client_id,
+                                                @Query("delegate_id") String delegate_id,
+                                                @Query("date") String date,
+
                                                 @Query("pagination") String pagination,
                                                 @Query("page") int page
 
@@ -63,6 +69,13 @@ public interface Service {
                              @Field("user_id") int user_id,
                              @Field("phone_token") String phone_token,
                              @Field("software_type") String software_type
+    );
+    @GET("api/get-users")
+    Call<AllUserModel> getUser(@Header("Authorization") String token
+    );
+    @GET("api/search-pharmacy")
+    Call<PharmacyDataModel> search(@Query("search_name") String query
+
     );
 
 }

@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,12 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.zawraaadmin.R;
+import com.zawraaadmin.adapters.ClientSpinnerAdapter;
+import com.zawraaadmin.adapters.DelegeteSpinnerAdapter;
 import com.zawraaadmin.adapters.NotificationAdapter;
 import com.zawraaadmin.databinding.ActivityNotificationBinding;
 import com.zawraaadmin.language.Language;
 import com.zawraaadmin.models.NotModel;
 import com.zawraaadmin.models.NotificationDataModel;
 import com.zawraaadmin.models.NotificationModel;
+import com.zawraaadmin.models.PharmacyModel;
+import com.zawraaadmin.models.SingleUserModel;
 import com.zawraaadmin.mvp.activity_notification_mvp.ActivityNotificationPresenter;
 import com.zawraaadmin.mvp.activity_notification_mvp.ActivityNotificationView;
 import com.zawraaadmin.share.Common;
@@ -52,6 +56,10 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
     private LinearLayoutManager manager;
     private int current_page = 1;
     private boolean isLoading = false;
+    private List<SingleUserModel> singleUserModelList;
+    private List<PharmacyModel> pharmacyModelList;
+    private String client_id,delegete_id;
+    private String date;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -68,6 +76,8 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
     }
 
     private void initView() {
+        singleUserModelList = new ArrayList<>();
+        pharmacyModelList = new ArrayList<>();
         EventBus.getDefault().register(this);
         notificationModelList = new ArrayList<>();
         Paper.init(this);
@@ -83,7 +93,13 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
         adapter = new NotificationAdapter(notificationModelList, this);
         binding.recView.setAdapter(adapter);
         presenter = new ActivityNotificationPresenter(this, this);
-        presenter.getNotifications(1);
+        presenter.getNotifications(1,client_id,delegete_id, date);
+        binding.flDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.showDateDialog(getFragmentManager());
+            }
+        });
         binding.llBack.setOnClickListener(view -> finish());
         binding.imagelogout.setOnClickListener(view -> presenter.logout());
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -98,21 +114,52 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
                         notificationModelList.add(null);
                         adapter.notifyItemInserted(notificationModelList.size() - 1);
                         int next_page = current_page + 1;
-                        presenter.getNotifications(next_page);
+                        presenter.getNotifications(next_page,client_id,delegete_id, date);
 
 
                     }
                 }
             }
         });
+        binding.spinnerdelegete.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                delegete_id = singleUserModelList.get(i).getId()+"";
+                notificationModelList.clear();
+                adapter.notifyDataSetChanged();
+                presenter.getNotifications(1,client_id,delegete_id, date);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        binding.spinnerclient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                client_id = pharmacyModelList.get(i).getId()+"";
+                notificationModelList.clear();
+                adapter.notifyDataSetChanged();
+                presenter.getNotifications(1,client_id,delegete_id, date);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+presenter.getUsers();
     }
 
     @Override
     public void onSuccess(NotificationDataModel data) {
-        if(notificationModelList.size()>0){
-            if(notificationModelList.get(notificationModelList.size()-1)==null){
-                notificationModelList.remove(notificationModelList.size()-1);
-                adapter.notifyItemRemoved(notificationModelList.size()-1);
+        if (notificationModelList.size() > 0) {
+            if (notificationModelList.get(notificationModelList.size() - 1) == null) {
+                notificationModelList.remove(notificationModelList.size() - 1);
+                adapter.notifyItemRemoved(notificationModelList.size() - 1);
             }
         }
         if (data.getData().size() > 0) {
@@ -190,24 +237,47 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
         finish();
     }
 
+    @Override
+    public void onUserSuccess(List<SingleUserModel> data) {
+        singleUserModelList.add(new SingleUserModel(getResources().getString(R.string.choose_delegete)));
+        singleUserModelList.addAll(data);
+        DelegeteSpinnerAdapter delegeteSpinnerAdapter = new DelegeteSpinnerAdapter(singleUserModelList, this);
+    binding.spinnerdelegete.setAdapter(delegeteSpinnerAdapter);
+
+    }
+
+    @Override
+    public void onClientSuccess(List<PharmacyModel> data) {
+        pharmacyModelList.add(new PharmacyModel(getResources().getString(R.string.choose_client)));
+        pharmacyModelList.addAll(data);
+        ClientSpinnerAdapter clientSpinnerAdapter = new ClientSpinnerAdapter(pharmacyModelList, this);
+        binding.spinnerclient.setAdapter(clientSpinnerAdapter);
+    }
+
+    @Override
+    public void onDateSelected(String date) {
+        this.date=date;
+        binding.tvDate.setText(date);
+        presenter.getNotifications(current_page,client_id,delegete_id,date);
+    }
+
     public void delete(int position) {
         pos = position;
         presenter.deltenotification(notificationModelList.get(position).getId());
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void listenToNewMessage(NotModel notModel)
-    {
-      notificationModelList.clear();
-      adapter.notifyDataSetChanged();
-      current_page=1;
-      presenter.getNotifications(current_page);
+    public void listenToNewMessage(NotModel notModel) {
+        notificationModelList.clear();
+        adapter.notifyDataSetChanged();
+        current_page = 1;
+        presenter.getNotifications(current_page,client_id,delegete_id, date);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-        {
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
     }

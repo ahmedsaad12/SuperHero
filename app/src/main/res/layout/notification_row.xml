@@ -41,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_margin="15dp"
-                app:cardCornerRadius="10dp">
+                app:cardCornerRadius="10dp"
+                app:contentPadding="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -51,14 +52,14 @@
                         android:id="@+id/tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
                         android:paddingLeft="3dp"
                         android:paddingRight="3dp"
                         android:text="@{model.ar_title}"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
-                        android:layout_marginTop="20dp"
-                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,9 +72,9 @@
                         android:text="@{model.ar_desc}"
                         android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv" />
 
                     <TextView
@@ -85,9 +86,9 @@
                         android:text="@{model.created_at}"
                         android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv1" />
 
                     <ImageView

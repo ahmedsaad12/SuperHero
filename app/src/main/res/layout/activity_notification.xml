@@ -70,9 +70,112 @@
 
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_stroke_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+
+            >
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="0dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerclient"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="0dp"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_stroke_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+
+            >
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="0dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerdelegete"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="0dp"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/flDate"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_stroke_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+
+            >
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="0dp"/>
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+
+                android:text="@string/choose_date"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                />
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="0dp"/>
+
+
+        </LinearLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
 
             >
             <androidx.recyclerview.widget.RecyclerView

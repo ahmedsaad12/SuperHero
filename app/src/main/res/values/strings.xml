@@ -18,5 +18,10 @@
     <string name="wait">Wait</string>
     <string name="phone_pass_inc">Phone PAsswor incorrect</string>
     <string name="no_notifications_to_show">No Notification To Show</string>
+    <string name="choose_delegete">Choose Delegte</string>
+    <string name="choose_client">Choose Client</string>
+    <string name="choose_date">Choose Date</string>
+    <string name="select">Select</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
