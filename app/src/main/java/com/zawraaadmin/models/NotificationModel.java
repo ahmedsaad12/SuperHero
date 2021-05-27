@@ -14,7 +14,7 @@ public class NotificationModel implements Serializable {
    private String is_read;
    private String created_at;
    private String updated_at;
-
+private UserModel.User client;
     public int getId() {
         return id;
     }
@@ -57,5 +57,9 @@ public class NotificationModel implements Serializable {
 
     public String getUpdated_at() {
         return updated_at;
+    }
+
+    public UserModel.User getClient() {
+        return client;
     }
 }

@@ -1,6 +1,7 @@
 package com.zawraaadmin.models;
 
 import java.io.Serializable;
+
 public class UserModel implements Serializable {
 
     private User data;
@@ -28,6 +29,8 @@ public class UserModel implements Serializable {
         private String updated_at;
         private String token;
         private String fireBaseToken;
+        private double latitude;
+        private double longitude;
 
         public int getId() {
             return id;
@@ -83,6 +86,14 @@ public class UserModel implements Serializable {
 
         public void setFireBaseToken(String fireBaseToken) {
             this.fireBaseToken = fireBaseToken;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
         }
     }
 

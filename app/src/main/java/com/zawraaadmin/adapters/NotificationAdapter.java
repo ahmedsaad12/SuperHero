@@ -1,7 +1,9 @@
 package com.zawraaadmin.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +76,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             NotificationActivity notificationActivity=(NotificationActivity)context;
             notificationActivity.delete(holder.getLayoutPosition());
         }
+    }
+});
+((EventHolder) holder).binding.lllocation.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f (%s)", orderlist.get(holder.getLayoutPosition()).getClient().getLatitude(), orderlist.get(holder.getLayoutPosition()).getClient().getLongitude(),"");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.setPackage("com.google.android.apps.maps");
+        context.startActivity(intent);
     }
 });
         }else

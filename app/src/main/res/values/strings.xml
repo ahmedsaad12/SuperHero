@@ -23,5 +23,6 @@
     <string name="choose_date">Choose Date</string>
     <string name="select">Select</string>
     <string name="cancel">Cancel</string>
+    <string name="show_location_of_delgete">Show Location Of Delgete</string>
 
 </resources>
