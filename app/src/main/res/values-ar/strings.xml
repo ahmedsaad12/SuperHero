@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">زوراء أدمن</string>
+    <string name="back">رجوع</string>
+    <string name="field_req">الحقل مطلوب</string>
+    <string name="login">تسجيل الدخول</string>
+
+    <string name="email">البريد الالكترونى</string>
+
+    <string name="logout">تسجيل الخروج</string>
+
+    <string name="notifications">الاشعارات</string>
+
+    <string name="field_required">الحقل مطلوب</string>
+    <string name="inv_email">بريد الكترونى خاطئ</string>
+    <string name="failed">يوجد مشكله وجارى العمل عليها</string>
+    <string name="password_short"> كلمة المرور قصيره جدا</string>
+    <string name="password">كلمة المرور</string>
+    <string name="wait">انتظر</string>
+    <string name="phone_pass_inc">البريد الالكترونى او كلمة المرور خطأ</string>
+    <string name="no_notifications_to_show">لا يوجد اشعارات لعرضها</string>
+    <string name="choose_delegete">اختر المندوب</string>
+    <string name="choose_client">اختر الصيدليه</string>
+    <string name="choose_date">اختر التاريخ</string>
+    <string name="select">اختر</string>
+    <string name="cancel">إلغاء</string>
+    <string name="show_location_of_delgete">شاهد موقع المندوب</string>
+</resources>

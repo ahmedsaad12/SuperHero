@@ -79,7 +79,7 @@
                         android:textColorHint="@color/gray4"
                         android:background="@color/transparent"
                         android:text="@={model.email}"
-                        error="@{model.email}"
+                        error="@{model.error_email}"
                         />
                     </com.google.android.material.textfield.TextInputLayout>
 
