@@ -25,4 +25,5 @@
     <string name="select">اختر</string>
     <string name="cancel">إلغاء</string>
     <string name="show_location_of_delgete">شاهد موقع المندوب</string>
+    <string name="pharmcy_name">اسم الصيدليه</string>
 </resources>

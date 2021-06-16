@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="model"
             type="com.zawraaadmin.models.UserModel" />
@@ -16,52 +18,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                >
+                android:background="@color/white">
+
                 <LinearLayout
                     android:id="@+id/llBack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_left_arrow"
-                        android:padding="3dp"
                         android:clickable="false"
                         android:longClickable="false"
+                        android:padding="3dp"
                         android:rotation='@{lang.equals("ar")?180:0}'
+                        android:src="@drawable/ic_left_arrow"
                         android:visibility="invisible"
 
                         />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:text="@string/back"
+                        android:layout_weight="1"
                         android:clickable="false"
                         android:longClickable="false"
-                        android:layout_weight="1"
+                        android:text="@string/back"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
                         android:visibility="invisible"
 
                         />
+
                     <ImageView
                         android:id="@+id/imagelogout"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                      android:layout_marginEnd="15dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="15dp"
                         android:src="@drawable/ic_logout"
 
 
@@ -70,37 +75,89 @@
 
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="45dp"-->
+        <!--            android:layout_marginStart="20dp"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:layout_marginEnd="20dp"-->
+        <!--            android:layout_marginBottom="10dp"-->
+        <!--            android:background="@drawable/rounded_stroke_primary"-->
+        <!--            android:clickable="true"-->
+        <!--            android:focusable="true"-->
+        <!--            android:gravity="center_vertical"-->
+        <!--            android:orientation="horizontal"-->
+
+        <!--            >-->
+
+        <!--            <Space-->
+        <!--                android:layout_width="20dp"-->
+        <!--                android:layout_height="0dp"/>-->
+
+        <!--            <Spinner-->
+        <!--                android:id="@+id/spinnerclient"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_height="match_parent"/>-->
+
+        <!--            <Space-->
+        <!--                android:layout_width="20dp"-->
+        <!--                android:layout_height="0dp"/>-->
+
+
+        <!--        </LinearLayout>-->
         <LinearLayout
+            android:id="@+id/llSearch"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_stroke_primary"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="3dp"
+            android:visibility="visible">
 
-            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_stroke_primary"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
 
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="0dp"/>
+                >
 
-            <Spinner
-                android:id="@+id/spinnerclient"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
 
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="0dp"/>
+                <AutoCompleteTextView
+                    android:id="@+id/edtSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="3"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:imeOptions="actionSearch"
+                    android:hint="@string/pharmcy_name"
+                    android:inputType="textAutoComplete"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    tools:ignore="RtlCompat" />
 
+
+            </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -118,20 +175,21 @@
 
             <Space
                 android:layout_width="20dp"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp" />
 
             <Spinner
                 android:id="@+id/spinnerdelegete"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
             <Space
                 android:layout_width="20dp"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp" />
 
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/flDate"
             android:layout_width="match_parent"
@@ -150,24 +208,24 @@
 
             <Space
                 android:layout_width="20dp"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp" />
 
             <TextView
                 android:id="@+id/tvDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-
-                android:text="@string/choose_date"
                 android:gravity="start"
+                android:singleLine="true"
+                android:text="@string/choose_date"
+
                 android:textAlignment="viewStart"
-                />
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
             <Space
                 android:layout_width="20dp"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp" />
 
 
         </LinearLayout>
@@ -178,27 +236,27 @@
             android:layout_weight="1"
 
             >
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <ProgressBar
                 android:id="@+id/progBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                />
+                android:layout_gravity="center" />
+
             <TextView
                 android:id="@+id/tvNoData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="@string/no_notifications_to_show"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:text="@string/no_notifications_to_show"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
         </FrameLayout>
     </LinearLayout>

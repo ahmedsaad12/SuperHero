@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ import com.zawraaadmin.R;
 import com.zawraaadmin.adapters.ClientSpinnerAdapter;
 import com.zawraaadmin.adapters.DelegeteSpinnerAdapter;
 import com.zawraaadmin.adapters.NotificationAdapter;
+import com.zawraaadmin.adapters.PharmcyAutoAdapter;
 import com.zawraaadmin.databinding.ActivityNotificationBinding;
 import com.zawraaadmin.language.Language;
 import com.zawraaadmin.models.NotModel;
@@ -58,9 +62,10 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
     private boolean isLoading = false;
     private List<SingleUserModel> singleUserModelList;
     private List<PharmacyModel> pharmacyModelList;
-    private String client_id,delegete_id;
+    private String client_id, delegete_id;
     private String date;
-
+    private String query = "all";
+    private PharmcyAutoAdapter pharmcyAutoAdapter;
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -93,13 +98,16 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
         adapter = new NotificationAdapter(notificationModelList, this);
         binding.recView.setAdapter(adapter);
         presenter = new ActivityNotificationPresenter(this, this);
-        presenter.getNotifications(1,client_id,delegete_id, date);
+        presenter.getNotifications(1, client_id, delegete_id, date);
         binding.flDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.showDateDialog(getFragmentManager());
             }
         });
+        pharmcyAutoAdapter = new PharmcyAutoAdapter(this, R.layout.pharmcy_auto_row, pharmacyModelList);
+
+        binding.edtSearch.setAdapter(pharmcyAutoAdapter);
         binding.llBack.setOnClickListener(view -> finish());
         binding.imagelogout.setOnClickListener(view -> presenter.logout());
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -114,7 +122,7 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
                         notificationModelList.add(null);
                         adapter.notifyItemInserted(notificationModelList.size() - 1);
                         int next_page = current_page + 1;
-                        presenter.getNotifications(next_page,client_id,delegete_id, date);
+                        presenter.getNotifications(next_page, client_id, delegete_id, date);
 
 
                     }
@@ -124,18 +132,17 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
         binding.spinnerdelegete.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               if(i!=0) {
-                   delegete_id = singleUserModelList.get(i).getId() + "";
-                   notificationModelList.clear();
-                   adapter.notifyDataSetChanged();
-                   presenter.getNotifications(1, client_id, delegete_id, date);
-               }
-               else {
-                   delegete_id = null;
-                   notificationModelList.clear();
-                   adapter.notifyDataSetChanged();
-                   presenter.getNotifications(1, client_id, delegete_id, date);
-               }
+                if (i != 0) {
+                    delegete_id = singleUserModelList.get(i).getId() + "";
+                    notificationModelList.clear();
+                    adapter.notifyDataSetChanged();
+                    presenter.getNotifications(1, client_id, delegete_id, date);
+                } else {
+                    delegete_id = null;
+                    notificationModelList.clear();
+                    adapter.notifyDataSetChanged();
+                    presenter.getNotifications(1, client_id, delegete_id, date);
+                }
             }
 
             @Override
@@ -143,28 +150,51 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
 
             }
         });
-        binding.spinnerclient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//        binding.spinnerclient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//     if(i!=0) {
+//         client_id = pharmacyModelList.get(i).getId() + "";
+//         notificationModelList.clear();
+//         adapter.notifyDataSetChanged();
+//         presenter.getNotifications(1, client_id, delegete_id, date);
+//     }else {
+//         client_id =null;
+//         notificationModelList.clear();
+//         adapter.notifyDataSetChanged();
+//         presenter.getNotifications(1, client_id, delegete_id, date);
+//     }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+        presenter.getUsers();
+        binding.edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-     if(i!=0) {
-         client_id = pharmacyModelList.get(i).getId() + "";
-         notificationModelList.clear();
-         adapter.notifyDataSetChanged();
-         presenter.getNotifications(1, client_id, delegete_id, date);
-     }else {
-         client_id =null;
-         notificationModelList.clear();
-         adapter.notifyDataSetChanged();
-         presenter.getNotifications(1, client_id, delegete_id, date);
-     }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("dlldl",s+"");
+                query = binding.edtSearch.getText().toString();
+                if (query == null || query.isEmpty()||s.length()==0) {
+                    query = "all";
+                }
+                presenter.search(query);
 
             }
         });
-presenter.getUsers();
+        presenter.search(query);
     }
 
     @Override
@@ -255,23 +285,25 @@ presenter.getUsers();
         singleUserModelList.add(new SingleUserModel(getResources().getString(R.string.choose_delegete)));
         singleUserModelList.addAll(data);
         DelegeteSpinnerAdapter delegeteSpinnerAdapter = new DelegeteSpinnerAdapter(singleUserModelList, this);
-    binding.spinnerdelegete.setAdapter(delegeteSpinnerAdapter);
+        binding.spinnerdelegete.setAdapter(delegeteSpinnerAdapter);
 
     }
 
     @Override
     public void onClientSuccess(List<PharmacyModel> data) {
-        pharmacyModelList.add(new PharmacyModel(getResources().getString(R.string.choose_client)));
+        pharmacyModelList.clear();
+        //pharmacyModelList.add(new PharmacyModel(getResources().getString(R.string.choose_client)));
         pharmacyModelList.addAll(data);
         ClientSpinnerAdapter clientSpinnerAdapter = new ClientSpinnerAdapter(pharmacyModelList, this);
-        binding.spinnerclient.setAdapter(clientSpinnerAdapter);
+//        binding.spinnerclient.setAdapter(clientSpinnerAdapter);
+        pharmcyAutoAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onDateSelected(String date) {
-        this.date=date;
+        this.date = date;
         binding.tvDate.setText(date);
-        presenter.getNotifications(current_page,client_id,delegete_id,date);
+        presenter.getNotifications(current_page, client_id, delegete_id, date);
     }
 
     public void delete(int position) {
@@ -284,7 +316,7 @@ presenter.getUsers();
         notificationModelList.clear();
         adapter.notifyDataSetChanged();
         current_page = 1;
-        presenter.getNotifications(current_page,client_id,delegete_id, date);
+        presenter.getNotifications(current_page, client_id, delegete_id, date);
     }
 
     @Override
@@ -293,5 +325,16 @@ presenter.getUsers();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+    }
+
+    public void additem(PharmacyModel pharmacyModel) {
+        notificationModelList.clear();
+        adapter.notifyDataSetChanged();
+        client_id = pharmacyModel.getId() + "";
+        presenter.getNotifications(1, client_id, delegete_id, date);
+       binding.edtSearch.setText("");
+       binding.edtSearch.setText(pharmacyModel.getTitle()+" ");
+
+
     }
 }

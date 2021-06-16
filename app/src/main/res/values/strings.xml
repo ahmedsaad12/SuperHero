@@ -24,5 +24,6 @@
     <string name="select">Select</string>
     <string name="cancel">Cancel</string>
     <string name="show_location_of_delgete">Show Location Of Delgete</string>
+    <string name="pharmcy_name">Pharmcy Name</string>
 
 </resources>

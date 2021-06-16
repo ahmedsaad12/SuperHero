@@ -350,7 +350,7 @@ public class ActivityNotificationPresenter implements DatePickerDialog.OnDateSet
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().getStatus() == 200 && response.body().getData() != null) {
                                 view.onUserSuccess(response.body().getData());
-                                search();
+                              //  search();
                             }
 
 
@@ -392,11 +392,11 @@ public class ActivityNotificationPresenter implements DatePickerDialog.OnDateSet
                 });
     }
 
-    public void search() {
+    public void search(String query) {
 
 
         Api.getService(Tags.base_url)
-                .search("all")
+                .search(query)
                 .enqueue(new Callback<PharmacyDataModel>() {
                     @Override
                     public void onResponse(Call<PharmacyDataModel> call, Response<PharmacyDataModel> response) {
