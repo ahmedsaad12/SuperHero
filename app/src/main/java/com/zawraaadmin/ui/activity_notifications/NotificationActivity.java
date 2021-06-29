@@ -185,11 +185,13 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.e("dlldl",s+"");
+            //    Log.e("dlldl",s+"");
                 query = binding.edtSearch.getText().toString();
-                if (query == null || query.isEmpty()||s.length()==0) {
+                if (query.isEmpty() || s.length() == 0) {
                     query = "all";
-                }
+                    current_page = 1;
+                    client_id=null;
+                    presenter.getNotifications(current_page, client_id, delegete_id, date);                }
                 presenter.search(query);
 
             }
