@@ -185,6 +185,7 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
 
             @Override
             public void afterTextChanged(Editable s) {
+
             //    Log.e("dlldl",s+"");
                 query = binding.edtSearch.getText().toString();
 //                if (query.trim().isEmpty()) {
