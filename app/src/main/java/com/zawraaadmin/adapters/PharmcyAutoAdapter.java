@@ -49,16 +49,13 @@ public class PharmcyAutoAdapter extends ArrayAdapter<PharmacyModel> {
             PharmacyModel PharmacyModel = getItem(position);
             TextView name = (TextView) convertView.findViewById(R.id.tvTitle);
             name.setText(PharmacyModel.getTitle());
-            name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(mContext instanceof NotificationActivity){
-                        NotificationActivity notificationActivity=(NotificationActivity) mContext;
-                        notificationActivity.additem(PharmacyModelList.get(position));
-
-                    }
+            name.setOnClickListener(v -> {
+                if(mContext instanceof NotificationActivity){
+                    NotificationActivity notificationActivity=(NotificationActivity) mContext;
+                    notificationActivity.additem(PharmacyModelList.get(position));
 
                 }
+
             });
         } catch (Exception e) {
             e.printStackTrace();

@@ -187,11 +187,12 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
             public void afterTextChanged(Editable s) {
             //    Log.e("dlldl",s+"");
                 query = binding.edtSearch.getText().toString();
-                if (query.isEmpty() || s.length() == 0) {
-                    query = "all";
-                    current_page = 1;
-                    client_id=null;
-                    presenter.getNotifications(current_page, client_id, delegete_id, date);                }
+//                if (query.trim().isEmpty()) {
+//                    query = "all";
+//                    current_page = 1;
+//                    client_id=null;
+//                    presenter.getNotifications(current_page, client_id, delegete_id, date);
+//                }
                 presenter.search(query);
 
             }
@@ -332,7 +333,8 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
     public void additem(PharmacyModel pharmacyModel) {
         notificationModelList.clear();
         adapter.notifyDataSetChanged();
-        client_id = pharmacyModel.getId() + "";
+        if(pharmacyModel!=null){
+        client_id = pharmacyModel.getId() + "";}
         presenter.getNotifications(1, client_id, delegete_id, date);
        binding.edtSearch.setText("");
        binding.edtSearch.setText(pharmacyModel.getTitle()+" ");

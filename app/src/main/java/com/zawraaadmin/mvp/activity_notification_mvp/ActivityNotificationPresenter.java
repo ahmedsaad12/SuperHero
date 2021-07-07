@@ -102,6 +102,7 @@ public class ActivityNotificationPresenter implements DatePickerDialog.OnDateSet
             call.cancel();
 
         }
+        Log.e("kkksk",client_id+" ss"+deleget_id+" ss"+date+"ss");
         call = Api.getService(Tags.base_url).
                 getNotification(userModel.getData().getToken(), userModel.getData().getId(),client_id,deleget_id,date, "on", page);
 
