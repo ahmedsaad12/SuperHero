@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -186,15 +187,27 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
             @Override
             public void afterTextChanged(Editable s) {
 
-            //    Log.e("dlldl",s+"");
+                Log.e("dlldl",client_id+"___"+delegete_id);
                 query = binding.edtSearch.getText().toString();
-//                if (query.trim().isEmpty()) {
-//                    query = "all";
-//                    current_page = 1;
-//                    client_id=null;
-//                    presenter.getNotifications(current_page, client_id, delegete_id, date);
-//                }
-                presenter.search(query);
+
+                if (query.trim().isEmpty()) {
+                    current_page = 1;
+                    client_id = null;
+                    new Handler()
+                            .postDelayed(() -> {
+                                presenter.getNotifications(current_page, client_id, delegete_id, date);
+
+                            }, 2000);
+                    Log.e("ff", "rrr");
+                }else {
+                    Log.e("xx", "xx");
+                    new Handler()
+                            .postDelayed(() -> {
+                                presenter.search(query);
+
+                            }, 2000);
+
+                }
 
             }
         });
@@ -337,7 +350,6 @@ public class NotificationActivity extends AppCompatActivity implements ActivityN
         if(pharmacyModel!=null){
         client_id = pharmacyModel.getId() + "";}
         presenter.getNotifications(1, client_id, delegete_id, date);
-       binding.edtSearch.setText("");
        binding.edtSearch.setText(pharmacyModel.getTitle()+" ");
 
 

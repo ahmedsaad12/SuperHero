@@ -342,7 +342,6 @@ public class ActivityNotificationPresenter implements DatePickerDialog.OnDateSet
         dialog=Common.createProgressDialog(context, context.getString(R.string.wait));
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
-        dialog.show();
         Api.getService(Tags.base_url)
                 .getUser(userModel.getData().getToken())
                 .enqueue(new Callback<AllUserModel>() {

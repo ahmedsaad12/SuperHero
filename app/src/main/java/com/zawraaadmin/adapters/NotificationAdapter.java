@@ -48,47 +48,43 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (viewType==ITEM_DATA)
-        {
-            NotificationRowBinding binding  = DataBindingUtil.inflate(inflater, R.layout.notification_row,parent,false);
+        if (viewType == ITEM_DATA) {
+            NotificationRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.notification_row, parent, false);
             return new EventHolder(binding);
 
-        }else
-        {
-            LoadMoreBinding binding = DataBindingUtil.inflate(inflater, R.layout.load_more,parent,false);
+        } else {
+            LoadMoreBinding binding = DataBindingUtil.inflate(inflater, R.layout.load_more, parent, false);
             return new LoadHolder(binding);
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-       NotificationModel notificationModel = orderlist.get(position);
-        if (holder instanceof EventHolder)
-        {
+        NotificationModel notificationModel = orderlist.get(position);
+        if (holder instanceof EventHolder) {
             EventHolder eventHolder = (EventHolder) holder;
 
             eventHolder.binding.setModel(notificationModel);
 
-((EventHolder) holder).binding.carddelete.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if(context instanceof NotificationActivity){
-            NotificationActivity notificationActivity=(NotificationActivity)context;
-            notificationActivity.delete(holder.getLayoutPosition());
-        }
-    }
-});
-((EventHolder) holder).binding.lllocation.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f (%s)", orderlist.get(holder.getLayoutPosition()).getClient().getLatitude(), orderlist.get(holder.getLayoutPosition()).getClient().getLongitude(),"");
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        intent.setPackage("com.google.android.apps.maps");
-        context.startActivity(intent);
-    }
-});
-        }else
-        {
+            ((EventHolder) holder).binding.carddelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (context instanceof NotificationActivity) {
+                        NotificationActivity notificationActivity = (NotificationActivity) context;
+                        notificationActivity.delete(holder.getLayoutPosition());
+                    }
+                }
+            });
+            ((EventHolder) holder).binding.lllocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f (%s)", orderlist.get(holder.getLayoutPosition()).getClient().getLatitude(), orderlist.get(holder.getLayoutPosition()).getClient().getLongitude(), "");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    intent.setPackage("com.google.android.apps.maps");
+                    context.startActivity(intent);
+                }
+            });
+        } else {
             LoadHolder loadHolder = (LoadHolder) holder;
             loadHolder.binding.progBar.setIndeterminate(true);
         }
@@ -101,6 +97,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class EventHolder extends RecyclerView.ViewHolder {
         public NotificationRowBinding binding;
+
         public EventHolder(@NonNull NotificationRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -110,10 +107,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class LoadHolder extends RecyclerView.ViewHolder {
         private LoadMoreBinding binding;
+
         public LoadHolder(@NonNull LoadMoreBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+            binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         }
 
     }
@@ -121,16 +119,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemViewType(int position) {
         NotificationModel order_Model = orderlist.get(position);
-        if (order_Model!=null)
-        {
+        if (order_Model != null) {
             return ITEM_DATA;
-        }else
-        {
+        } else {
             return LOAD;
         }
 
     }
-
 
 
 }
